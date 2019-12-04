@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import PokemonService from '../services/PokemonService';
 
 function Pokemon(props) {
@@ -6,13 +7,21 @@ function Pokemon(props) {
 
     useEffect(() => {
         (async () => {
-            const res = await PokemonService.getOneByName('pikachu');
+            const res = await PokemonService.getOneByNameOrId(props.match.params.nameOrId);
             setPokemonInfo(res);
         })();
-    }, [props.match.params.name]);
+    }, [props.match.params.nameOrId]);
 
     return (
         <div>
+            {
+                pokemonInfo.id ? (
+                    <div>
+                        <Link to={`/pokemon/${pokemonInfo.id - 1}`}>Previous</Link>
+                        <Link to={`/pokemon/${pokemonInfo.id + 1}`}>Next</Link>
+                    </div>
+                ) : null
+            }
             <h1>{pokemonInfo.name}</h1>
             <span>ID: {pokemonInfo.id}</span>
             {

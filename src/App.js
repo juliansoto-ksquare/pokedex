@@ -7,8 +7,7 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/pokemon/:name" component={Pokemon} />
+          <Route path="/pokemon/:nameOrId" component={Pokemon} />
         </Switch>
       </Router>
     </div>
