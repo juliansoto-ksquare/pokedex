@@ -14,6 +14,7 @@ function Pokemon(props) {
 
     return (
         <div>
+            <Link to="/">Home</Link>
             {
                 pokemonInfo.id ? (
                     <div>
@@ -25,9 +26,9 @@ function Pokemon(props) {
             <h1>{pokemonInfo.name}</h1>
             <span>ID: {pokemonInfo.id}</span>
             {
-                pokemonInfo.sprites ? Object.entries(pokemonInfo.sprites).map(entry => {
-                    return <img src={entry[1]} key={entry[0]} alt={entry[0]} />
-                }) : null
+                pokemonInfo.sprites ? (
+                    <img src={pokemonInfo.sprites.front_default} alt={pokemonInfo.name} />
+                ) : null
             }
             {
                 pokemonInfo.types ? pokemonInfo.types.map((typesItem, index) => {
