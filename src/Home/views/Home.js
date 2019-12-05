@@ -28,8 +28,23 @@ function Home() {
             <h1>Home</h1>
             {
                 pokemons.map(pokemon => {
+                    const pokemonUrl = new URL(pokemon.url);
+                    const id = pokemonUrl.pathname.split('/')[4];
                     return (
-                        <Link to={`/pokemon/${pokemon.name}`} key={pokemon.name}>{pokemon.name}</Link>
+                        <article key={id}>
+                            <h1>
+                                <Link
+                                    to={`/pokemon/${pokemon.name}`}
+                                    key={pokemon.name}
+                                >
+                                    {pokemon.name}
+                                </Link>
+                            </h1>
+                            <img
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                                alt={pokemon.name}
+                            />
+                        </article>
                     )
                 })
             } {
