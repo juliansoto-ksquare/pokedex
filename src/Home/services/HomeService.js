@@ -9,6 +9,19 @@ const HomeService = {
         const res = await fetch(`https://pokeapi.co/api/v2/type`);
         const body = await res.json();
         return Promise.resolve(body);
+    },
+
+    getAllByType: async (id) => {
+        const res = await fetch(`https://pokeapi.co/api/v2/type/${id}`);
+        const body = await res.json();
+        
+        const formattedResponse = {
+            results: body.pokemon.map(pokemon => {
+                return pokemon.pokemon
+            })
+        }
+
+        return Promise.resolve(formattedResponse);
     }
 }
 
