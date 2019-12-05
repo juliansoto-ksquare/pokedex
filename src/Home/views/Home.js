@@ -19,10 +19,6 @@ function Home() {
         // eslint-disable-next-line
     }, []);
 
-    const handleNextButtonClick = () => {
-        fetchPokemons();
-    };
-
     return (
         <div>
             <h1>Home</h1>
@@ -47,10 +43,6 @@ function Home() {
                         </article>
                     )
                 })
-            } {
-                offset > 0 ? (
-                    <button onClick={handleNextButtonClick}>Show more</button>
-                ) : null
             }
         </div>
     )
