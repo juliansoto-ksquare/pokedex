@@ -5,6 +5,7 @@ import HomeService from '../services/HomeService';
 function Home() {
     const [pokemons, setPokemons] = useState([]);
     const [offset, setOffset] = useState(0);
+    const [pokemonTypes, setPokemonTypes] = useState(null);
 
     const fetchPokemons = useCallback(() => {
         (async () => {
@@ -15,6 +16,13 @@ function Home() {
     }, [offset, pokemons]);
 
     useEffect(() => {
+        (async () => {
+            const res = await HomeService.getTypes();
+            setPokemonTypes(res.results);
+        })();
+    }, []);
+
+    useEffect(() => {
         fetchPokemons();
         // eslint-disable-next-line
     }, []);
@@ -22,6 +30,21 @@ function Home() {
     return (
         <div>
             <h1>Home</h1>
+            {
+                pokemonTypes ? (
+                    <section>
+                        {
+                            pokemonTypes.map(pokemonType => {
+                                return (
+                                    <button key={pokemonType.name}>
+                                        {pokemonType.name}
+                                    </button>
+                                )
+                            })
+                        }
+                    </section>
+                ) : null
+            }
             {
                 pokemons.map(pokemon => {
                     const pokemonUrl = new URL(pokemon.url);
