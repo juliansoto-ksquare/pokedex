@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PokemonListContainer from '../atoms/PokemonListContainer';
 import PokemonArticle from '../atoms/PokemonArticle';
+import capitalize from 'capitalize';
 
 
 function PokemonsList({pokemons}) {
@@ -38,7 +39,7 @@ function PokemonsList({pokemons}) {
                                             to={`/pokemon/${pokemon.name}`}
                                             key={pokemon.name}
                                         >
-                                            {pokemon.name}
+                                            {capitalize(pokemon.name)}
                                         </Link>
                                     </h1>
                                     <img

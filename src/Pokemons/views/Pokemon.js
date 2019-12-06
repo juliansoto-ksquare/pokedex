@@ -5,6 +5,7 @@ import NavigationBar from '../atoms/NavigationBar';
 import NavigationButton from '../atoms/NavigationButton';
 import TypeSpan from '../atoms/TypeSpan';
 import Id from '../atoms/Id';
+import capitalize from 'capitalize';
 
 function Pokemon(props) {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -21,14 +22,16 @@ function Pokemon(props) {
             <Link to="/">Home</Link>
             {
                 pokemonInfo.id ? (
-                    <NavigationBar>
-                        <NavigationButton to={`/pokemon/${pokemonInfo.id - 1}`}>❮ Previous</NavigationButton>
-                        <NavigationButton to={`/pokemon/${pokemonInfo.id + 1}`}>Next ❯</NavigationButton>
-                    </NavigationBar>
+                    <>
+                        <NavigationBar>
+                            <NavigationButton to={`/pokemon/${pokemonInfo.id - 1}`}>❮ Previous</NavigationButton>
+                            <NavigationButton to={`/pokemon/${pokemonInfo.id + 1}`}>Next ❯</NavigationButton>
+                        </NavigationBar>
+                        <h1>{capitalize(pokemonInfo.name)}</h1>
+                        <Id>ID: {pokemonInfo.id}</Id>
+                    </>
                 ) : null
             }
-            <h1>{pokemonInfo.name}</h1>
-            <Id>ID: {pokemonInfo.id}</Id>
             {
                 pokemonInfo.sprites ? (
                     <img src={pokemonInfo.sprites.front_default} alt={pokemonInfo.name} />
@@ -36,7 +39,7 @@ function Pokemon(props) {
             }
             {
                 pokemonInfo.types ? pokemonInfo.types.map((typesItem, index) => {
-                    return <TypeSpan key={index}>{typesItem.type.name}</TypeSpan>
+                    return <TypeSpan key={index}>{capitalize(typesItem.type.name)}</TypeSpan>
                 }) : null
             }
         </div>

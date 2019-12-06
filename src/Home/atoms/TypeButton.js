@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import capitalize from 'capitalize';
 
 const PokemonType = styled.button`
     padding: 0.5em 1em;
@@ -19,7 +20,7 @@ const TypeButton = ({pokemonType, pokemonTypeIndex, onClick}) => {
     }
 
     return (
-        <PokemonType onClick={handleClick}>{pokemonType.toUpperCase()}</PokemonType>
+        <PokemonType onClick={handleClick}>{capitalize(pokemonType)}</PokemonType>
     )
 }
 
