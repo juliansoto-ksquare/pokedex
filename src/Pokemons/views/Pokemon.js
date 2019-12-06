@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import PokemonService from '../services/PokemonService';
+import NavigationBar from '../atoms/NavigationBar';
+import NavigationButton from '../atoms/NavigationButton';
+import TypeSpan from '../atoms/TypeSpan';
+import Id from '../atoms/Id';
 
 function Pokemon(props) {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -17,14 +21,14 @@ function Pokemon(props) {
             <Link to="/">Home</Link>
             {
                 pokemonInfo.id ? (
-                    <div>
-                        <Link to={`/pokemon/${pokemonInfo.id - 1}`}>Previous</Link>
-                        <Link to={`/pokemon/${pokemonInfo.id + 1}`}>Next</Link>
-                    </div>
+                    <NavigationBar>
+                        <NavigationButton to={`/pokemon/${pokemonInfo.id - 1}`}>❮ Previous</NavigationButton>
+                        <NavigationButton to={`/pokemon/${pokemonInfo.id + 1}`}>Next ❯</NavigationButton>
+                    </NavigationBar>
                 ) : null
             }
             <h1>{pokemonInfo.name}</h1>
-            <span>ID: {pokemonInfo.id}</span>
+            <Id>ID: {pokemonInfo.id}</Id>
             {
                 pokemonInfo.sprites ? (
                     <img src={pokemonInfo.sprites.front_default} alt={pokemonInfo.name} />
@@ -32,7 +36,7 @@ function Pokemon(props) {
             }
             {
                 pokemonInfo.types ? pokemonInfo.types.map((typesItem, index) => {
-                    return <span key={index}>{typesItem.type.name}</span>
+                    return <TypeSpan key={index}>{typesItem.type.name}</TypeSpan>
                 }) : null
             }
         </div>

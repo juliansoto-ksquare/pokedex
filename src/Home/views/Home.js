@@ -1,6 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import HomeService from '../services/HomeService';
+import PokemonArticle from '../atoms/PokemonArticle';
+import TypeButton from '../atoms/TypeButton';
+import PokemonListContainer from '../atoms/PokemonListContainer';
+
+import pokedexLogo from '../../images/Pokedex_logo.png';
 
 function Home() {
     const [pokemons, setPokemons] = useState([]);
@@ -15,11 +20,10 @@ function Home() {
         })();
     }, [offset, pokemons]);
 
-    const fetchPokemonsByType = useCallback(event => {
-        event.persist();
+    const fetchPokemonsByType = useCallback(pokemonTypeIndex => {
         (async () => {
-            const typeId = parseInt(event.target.dataset.index) + 1;
-            const res = await HomeService.getAllByType(typeId);
+            
+            const res = await HomeService.getAllByType(pokemonTypeIndex);
             setPokemons(res.results);
         })();
     }, []);
@@ -38,49 +42,51 @@ function Home() {
 
     return (
         <div>
-            <h1>Home</h1>
+            <img src={pokedexLogo} alt="" />
             {
                 pokemonTypes ? (
                     <section>
                         {
                             pokemonTypes.map((pokemonType, index) => {
                                 return (
-                                    <button
+                                    <TypeButton
                                         key={pokemonType.name}
                                         onClick={fetchPokemonsByType}
-                                        data-name={pokemonType.name}
-                                        data-index={index}
-                                    >
-                                        {pokemonType.name}
-                                    </button>
+                                        pokemonType={pokemonType.name}
+                                        pokemonTypeIndex={index}
+                                    ></TypeButton>
                                 )
                             })
                         }
                     </section>
                 ) : null
             }
-            {
-                pokemons.map(pokemon => {
-                    const pokemonUrl = new URL(pokemon.url);
-                    const id = pokemonUrl.pathname.split('/')[4];
-                    return (
-                        <article key={id}>
-                            <h1>
-                                <Link
-                                    to={`/pokemon/${pokemon.name}`}
-                                    key={pokemon.name}
-                                >
-                                    {pokemon.name}
-                                </Link>
-                            </h1>
-                            <img
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-                                alt={pokemon.name}
-                            />
-                        </article>
-                    )
-                })
-            }
+            <PokemonListContainer>
+                {
+                    pokemons.map(pokemon => {
+                        const pokemonUrl = new URL(pokemon.url);
+                        const id = pokemonUrl.pathname.split('/')[4];
+                        return (
+                            <li key={id}>
+                                <PokemonArticle>
+                                    <h1>
+                                        <Link
+                                            to={`/pokemon/${pokemon.name}`}
+                                            key={pokemon.name}
+                                        >
+                                            {pokemon.name}
+                                        </Link>
+                                    </h1>
+                                    <img
+                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                                        alt={pokemon.name}
+                                    />
+                                </PokemonArticle>
+                            </li>
+                        )
+                    })
+                }
+            </PokemonListContainer>
         </div>
     )
 }
