@@ -18,6 +18,7 @@ function Home() {
     }, [pokemons]);
 
     const fetchPokemonsByType = useCallback(pokemonTypeIndex => {
+        setPokemons([]);
         (async () => {
             let res;
             if (pokemonTypeIndex === null) {

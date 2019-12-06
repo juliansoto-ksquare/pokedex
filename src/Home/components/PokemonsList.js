@@ -17,12 +17,8 @@ function PokemonsList({pokemons}) {
 
     useEffect(() => {
         setloadedPokemons([]);
+        setOffset(0);
     }, [pokemons]);
-    
-    useEffect(() => {
-        loadMorePokemons();
-        // eslint-disable-next-line
-    }, []);
 
     return (
         <div>
@@ -52,7 +48,11 @@ function PokemonsList({pokemons}) {
                     })
                 }
             </PokemonListContainer>
-            <button onClick={loadMorePokemons}>Show more</button>
+            {
+                pokemons.length ? (
+                    <button onClick={loadMorePokemons}>Show more</button>
+                ) : null
+            }
         </div>
     )
 }
