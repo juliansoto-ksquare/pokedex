@@ -4,23 +4,28 @@ import capitalize from 'capitalize';
 
 const PokemonType = styled.button`
     padding: 0.5em 1em;
-    background: #51518f;
+    background: ${props => props.selected ? '#51518f' : '#f0f0f0'};
     border: none;
     border-radius: 2em;
     font-size: 1em;
-    color: white;
+    color: ${props => props.selected ? 'white' : 'black'};
     margin-bottom: 0.5em;
     margin-right: 0.5em;
 `;
 
-const TypeButton = ({pokemonType, pokemonTypeIndex, onClick}) => {
+const TypeButton = ({pokemonType, pokemonTypeIndex, onClick, selected}) => {
     const handleClick = () => {
         const typeId = parseInt(pokemonTypeIndex) + 1;
-        onClick(typeId);
+        onClick(selected ? null : typeId);
     }
 
     return (
-        <PokemonType onClick={handleClick}>{capitalize(pokemonType)}</PokemonType>
+        <PokemonType
+            onClick={handleClick}
+            selected={selected}
+        >
+            {capitalize(pokemonType)}
+        </PokemonType>
     )
 }
 

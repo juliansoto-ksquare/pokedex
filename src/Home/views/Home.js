@@ -7,22 +7,26 @@ import pokedexLogo from '../../images/Pokedex_logo.png';
 
 function Home() {
     const [pokemons, setPokemons] = useState([]);
-    const [offset, setOffset] = useState(0);
     const [pokemonTypes, setPokemonTypes] = useState([]);
+    const [selectedType, setSelectedType] = useState(null);
 
     const fetchPokemons = useCallback(() => {
         (async () => {
-            const res = await HomeService.getAll(offset);
+            const res = await HomeService.getAll();
             setPokemons([...pokemons, ...res.results]);
-            setOffset(offset + res.results.length);
         })();
-    }, [offset, pokemons]);
+    }, [pokemons]);
 
     const fetchPokemonsByType = useCallback(pokemonTypeIndex => {
         (async () => {
-            
-            const res = await HomeService.getAllByType(pokemonTypeIndex);
+            let res;
+            if (pokemonTypeIndex === null) {
+                res = await HomeService.getAll();
+            } else {
+                res = await HomeService.getAllByType(pokemonTypeIndex);
+            }
             setPokemons(res.results);
+            setSelectedType(pokemonTypeIndex);
         })();
     }, []);
 
@@ -52,6 +56,7 @@ function Home() {
                                         onClick={fetchPokemonsByType}
                                         pokemonType={pokemonType.name}
                                         pokemonTypeIndex={index}
+                                        selected={selectedType === index + 1}
                                     ></TypeButton>
                                 )
                             })
