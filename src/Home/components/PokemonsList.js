@@ -1,9 +1,9 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {Link} from 'react-router-dom';
 import PokemonListContainer from '../atoms/PokemonListContainer';
 import PokemonArticle from '../atoms/PokemonArticle';
 import capitalize from 'capitalize';
-
+import PokemonImg from '../atoms/PokemonImg';
+import DefaultPokemonIcon from '../../images/pokeball.png';
 
 function PokemonsList({pokemons}) {
     const [offset, setOffset] = useState(0);
@@ -29,18 +29,14 @@ function PokemonsList({pokemons}) {
                         const id = pokemonUrl.pathname.split('/')[4];
                         return (
                             <li key={id}>
-                                <PokemonArticle>
-                                    <h1>
-                                        <Link
-                                            to={`/pokemon/${pokemon.name}`}
-                                            key={pokemon.name}
-                                        >
-                                            {capitalize(pokemon.name)}
-                                        </Link>
-                                    </h1>
-                                    <img
+                                <PokemonArticle to={`/pokemon/${pokemon.name}`}>
+                                    <h1>{capitalize(pokemon.name)}</h1>
+                                    <PokemonImg
                                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
                                         alt={pokemon.name}
+                                        onError = {(e) => {
+                                            e.target.src = DefaultPokemonIcon;
+                                        }}
                                     />
                                 </PokemonArticle>
                             </li>
