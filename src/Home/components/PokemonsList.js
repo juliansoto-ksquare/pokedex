@@ -5,6 +5,7 @@ import PokemonArticle from '../atoms/PokemonArticle';
 import capitalize from 'capitalize';
 import PokemonImg from '../atoms/PokemonImg';
 import DefaultPokemonIcon from '../../images/pokeball.png';
+import SpinnerContainer from '../atoms/SpinnerContainer';
 
 function PokemonsList({pokemons}) {
     const [offset, setOffset] = useState(0);
@@ -16,7 +17,7 @@ function PokemonsList({pokemons}) {
         setOffset(offset + limit);
     }, [pokemons, offset, loadedPokemons]);
 
-    const [ref, inView, entry] = useInView();
+    const [ref, inView] = useInView();
 
     useEffect(() => {
         setloadedPokemons([]);
@@ -25,7 +26,6 @@ function PokemonsList({pokemons}) {
 
     useEffect(() => {
         if (inView) {
-            console.log('in view');
             loadMorePokemons();
         }
     }, [inView]);
@@ -56,7 +56,9 @@ function PokemonsList({pokemons}) {
             </PokemonListContainer>
             {
                 pokemons.length ? (
-                    <button ref={ref} onClick={loadMorePokemons}>Show more</button>
+                    <div ref={ref}>
+                        <SpinnerContainer forwardRef={ref} />
+                    </div>
                 ) : null
             }
         </div>
