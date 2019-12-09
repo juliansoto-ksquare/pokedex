@@ -1,4 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
+import { useInView } from 'react-intersection-observer';
 import PokemonListContainer from '../atoms/PokemonListContainer';
 import PokemonArticle from '../atoms/PokemonArticle';
 import capitalize from 'capitalize';
@@ -15,10 +16,19 @@ function PokemonsList({pokemons}) {
         setOffset(offset + limit);
     }, [pokemons, offset, loadedPokemons]);
 
+    const [ref, inView, entry] = useInView();
+
     useEffect(() => {
         setloadedPokemons([]);
         setOffset(0);
     }, [pokemons]);
+
+    useEffect(() => {
+        if (inView) {
+            console.log('in view');
+            loadMorePokemons();
+        }
+    }, [inView]);
 
     return (
         <div>
@@ -46,7 +56,7 @@ function PokemonsList({pokemons}) {
             </PokemonListContainer>
             {
                 pokemons.length ? (
-                    <button onClick={loadMorePokemons}>Show more</button>
+                    <button ref={ref} onClick={loadMorePokemons}>Show more</button>
                 ) : null
             }
         </div>
