@@ -2,8 +2,10 @@ import React, {useState, useCallback, useEffect} from 'react';
 import { useInView } from 'react-intersection-observer';
 import PokemonListContainer from '../atoms/PokemonListContainer';
 import PokemonArticle from '../atoms/PokemonArticle';
+import TitleContainer from '../atoms/TitleContainer';
 import capitalize from 'capitalize';
 import PokemonImg from '../atoms/PokemonImg';
+import IdContainer from '../atoms/IdContainer';
 import DefaultPokemonIcon from '../../images/pokeball.png';
 import SpinnerContainer from '../atoms/SpinnerContainer';
 
@@ -40,14 +42,19 @@ function PokemonsList({pokemons}) {
                         return (
                             <li key={id}>
                                 <PokemonArticle to={`/pokemon/${pokemon.name}`}>
-                                    <h1>{capitalize(pokemon.name)}</h1>
-                                    <PokemonImg
-                                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-                                        alt={pokemon.name}
-                                        onError = {(e) => {
-                                            e.target.src = DefaultPokemonIcon;
-                                        }}
-                                    />
+                                    <div>
+                                        <PokemonImg
+                                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+                                            alt={pokemon.name}
+                                            onError = {(e) => {
+                                                e.target.src = DefaultPokemonIcon;
+                                            }}
+                                        />
+                                    </div>
+                                    <TitleContainer>
+                                        <IdContainer>{id}</IdContainer>
+                                        <h1>{capitalize(pokemon.name)}</h1>
+                                    </TitleContainer>
                                 </PokemonArticle>
                             </li>
                         )

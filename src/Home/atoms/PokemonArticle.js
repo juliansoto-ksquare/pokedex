@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom'; 
+import {Link} from 'react-router-dom';
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
 
 const Article = styled.article`
     display: flex;
     flex-direction: column;
     align-items: center;
     border: solid 1px lightgray;
-    padding: 1em;
     color: black;
 
     :hover {
@@ -17,11 +20,11 @@ const Article = styled.article`
 
 const PokemonArticle = ({to, children}) => {
     return (
-        <Link to={to}>
+        <StyledLink to={to}>
             <Article>
                 { children }
             </Article>
-        </Link>
+        </StyledLink>
     )
 }
 
