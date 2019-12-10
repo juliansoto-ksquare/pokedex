@@ -1,9 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import styled from 'styled-components';
 import HomeService from '../services/HomeService';
 import TypeButton from '../atoms/TypeButton';
 import PokemonsList from '../components/PokemonsList';
+import Header from '../atoms/Header';
+import HeaderTitle from '../atoms/HeaderTitle';
 
-import pokedexLogo from '../../images/Pokedex_logo.png';
+const HomeContainer = styled.div`
+    padding-top: 8em;
+`;
 
 function Home() {
     const [pokemons, setPokemons] = useState([]);
@@ -44,8 +49,10 @@ function Home() {
     }, []);
 
     return (
-        <div>
-            <img src={pokedexLogo} alt="" />
+        <HomeContainer>
+            <Header>
+                <HeaderTitle>Pokedex</HeaderTitle>
+            </Header>
             {
                 pokemonTypes ? (
                     <section>
@@ -66,7 +73,7 @@ function Home() {
                 ) : null
             }
             <PokemonsList pokemons={pokemons} />
-        </div>
+        </HomeContainer>
     )
 }
 
