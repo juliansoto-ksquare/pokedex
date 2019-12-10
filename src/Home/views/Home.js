@@ -12,6 +12,7 @@ const HomeContainer = styled.div`
 
 function Home() {
     const [pokemons, setPokemons] = useState([]);
+    const [filteredPokemons, setFilteredPokemons] = useState([]);
     const [pokemonTypes, setPokemonTypes] = useState([]);
     const [selectedType, setSelectedType] = useState(null);
 
@@ -44,9 +45,22 @@ function Home() {
     }, []);
 
     useEffect(() => {
+        setFilteredPokemons(pokemons);
+    }, [pokemons]);
+
+    useEffect(() => {
         fetchPokemons();
         // eslint-disable-next-line
     }, []);
+
+    const handleSearchBarChange = useCallback(e => {
+        const value = e.target.value;
+        const filtered = pokemons.filter(pokemon => {
+            return pokemon.name.match(new RegExp(value, 'i')) ? true : false
+        });
+
+        setFilteredPokemons(filtered);
+    }, [pokemons]);
 
     return (
         <HomeContainer>
@@ -72,7 +86,8 @@ function Home() {
                     </section>
                 ) : null
             }
-            <PokemonsList pokemons={pokemons} />
+            <input onChange={handleSearchBarChange} />
+            <PokemonsList pokemons={filteredPokemons} />
         </HomeContainer>
     )
 }
