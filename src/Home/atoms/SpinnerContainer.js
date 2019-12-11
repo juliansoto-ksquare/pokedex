@@ -8,9 +8,9 @@ const Container = styled.div`
     justify-content: center;
 `;
 
-function SpinnerContainer({forwardRef}) {
+function SpinnerContainer() {
     return (
-        <Container ref={forwardRef}>
+        <Container>
             <img src={spinner} alt="Loading" />
         </Container>
     )

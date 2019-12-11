@@ -62,11 +62,11 @@ function PokemonsList({pokemons}) {
                 }
             </PokemonListContainer>
             {
-                pokemons.length ? (
+                pokemons.length && (
                     <div ref={ref}>
-                        <SpinnerContainer forwardRef={ref} />
+                        <SpinnerContainer />
                     </div>
-                ) : null
+                )
             }
         </div>
     )
