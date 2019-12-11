@@ -5,6 +5,7 @@ import PokemonArticle from '../atoms/PokemonArticle';
 import TitleContainer from '../atoms/TitleContainer';
 import capitalize from 'capitalize';
 import PokemonImg from '../atoms/PokemonImg';
+import PokemonImgContainer from '../atoms/PokemonImgContainer';
 import IdContainer from '../atoms/IdContainer';
 import DefaultPokemonIcon from '../../images/pokeball.png';
 import SpinnerContainer from '../atoms/SpinnerContainer';
@@ -43,7 +44,7 @@ function PokemonsList({pokemons}) {
                         return (
                             <li key={id}>
                                 <PokemonArticle to={`/pokemon/${pokemon.name}`}>
-                                    <div>
+                                    <PokemonImgContainer>
                                         <PokemonImg
                                             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
                                             alt={pokemon.name}
@@ -51,7 +52,7 @@ function PokemonsList({pokemons}) {
                                                 e.target.src = DefaultPokemonIcon;
                                             }}
                                         />
-                                    </div>
+                                    </PokemonImgContainer>
                                     <TitleContainer>
                                         <IdContainer>{id}</IdContainer>
                                         <h1>{capitalize(pokemon.name)}</h1>

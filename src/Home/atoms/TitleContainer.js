@@ -5,6 +5,7 @@ const TitleContainer = styled.div`
     width: 100%;
     text-align: center;
     background: #ddd;
+    padding-top: 0.75em;
 `;
 
 export default TitleContainer;

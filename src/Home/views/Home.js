@@ -5,6 +5,7 @@ import TypeButton from '../atoms/TypeButton';
 import PokemonsList from '../components/PokemonsList';
 import Header from '../atoms/Header';
 import HeaderTitle from '../atoms/HeaderTitle';
+import SearchBar from '../atoms/SearchBar.js';
 
 const HomeContainer = styled.div`
     padding-top: 8em;
@@ -65,7 +66,7 @@ function Home() {
     return (
         <HomeContainer>
             <Header>
-                <HeaderTitle>Pokedex</HeaderTitle>
+                <HeaderTitle to="/">Pokedex</HeaderTitle>
             </Header>
             {
                 pokemonTypes ? (
@@ -86,7 +87,7 @@ function Home() {
                     </section>
                 ) : null
             }
-            <input onChange={handleSearchBarChange} />
+            <SearchBar onChange={handleSearchBarChange} placeholder="Search" />
             <PokemonsList pokemons={filteredPokemons} />
         </HomeContainer>
     )

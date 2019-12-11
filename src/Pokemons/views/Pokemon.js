@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
 import PokemonService from '../services/PokemonService';
 import NavigationBar from '../atoms/NavigationBar';
 import NavigationButton from '../atoms/NavigationButton';
 import TypeSpan from '../atoms/TypeSpan';
+import PokemonName from '../atoms/PokemonName';
 import Id from '../atoms/Id';
+import Header from '../../Home/atoms/Header';
+import HeaderTitle from '../../Home/atoms/HeaderTitle';
 import capitalize from 'capitalize';
+import PokemonViewContainer from '../atoms/PokemonViewContainer';
+import PokemonSprite from '../atoms/PokemonSprite';
 
 function Pokemon(props) {
     const [pokemonInfo, setPokemonInfo] = useState({});
@@ -18,8 +22,12 @@ function Pokemon(props) {
     }, [props.match.params.nameOrId]);
 
     return (
-        <div>
-            <Link to="/">Home</Link>
+        <PokemonViewContainer>
+            <Header>
+                <HeaderTitle to="/">
+                    Pokedex
+                </HeaderTitle>
+            </Header>
             {
                 pokemonInfo.id ? (
                     <>
@@ -27,22 +35,32 @@ function Pokemon(props) {
                             <NavigationButton to={`/pokemon/${pokemonInfo.id - 1}`}>❮ Previous</NavigationButton>
                             <NavigationButton to={`/pokemon/${pokemonInfo.id + 1}`}>Next ❯</NavigationButton>
                         </NavigationBar>
-                        <h1>{capitalize(pokemonInfo.name)}</h1>
-                        <Id>ID: {pokemonInfo.id}</Id>
+                        <div>
+                            <PokemonName>{capitalize(pokemonInfo.name)}</PokemonName>
+                            <Id>#{pokemonInfo.id}</Id>
+                        </div>
                     </>
                 ) : null
             }
             {
                 pokemonInfo.sprites ? (
-                    <img src={pokemonInfo.sprites.front_default} alt={pokemonInfo.name} />
+                    <PokemonSprite src={pokemonInfo.sprites.front_default} alt={pokemonInfo.name} />
                 ) : null
             }
+
             {
-                pokemonInfo.types ? pokemonInfo.types.map((typesItem, index) => {
-                    return <TypeSpan key={index}>{capitalize(typesItem.type.name)}</TypeSpan>
-                }) : null
+                pokemonInfo.types && (
+                    <div>
+                        Types
+                        {
+                            pokemonInfo.types.map((typesItem, index) => {
+                                return <TypeSpan key={index}>{capitalize(typesItem.type.name)}</TypeSpan>
+                            })
+                        }
+                    </div>
+                )
             }
-        </div>
+        </PokemonViewContainer>
     );
 }
 

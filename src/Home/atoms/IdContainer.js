@@ -11,7 +11,7 @@ const IdContainer = styled.span`
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background: #353e9a;
+    background: #6e708d;
     color: white;
 `;
 
