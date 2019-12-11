@@ -15,8 +15,9 @@ function PokemonsList({pokemons}) {
     const limit = 10;
 
     const loadMorePokemons = useCallback(() => {
-        setloadedPokemons([...loadedPokemons, ...pokemons.slice(offset, offset + limit)]);
-        setOffset(offset + limit);
+        const rest = pokemons.slice(offset, offset + limit);
+        setloadedPokemons([...loadedPokemons, ...rest]);
+        setOffset(offset + rest.length);
     }, [pokemons, offset, loadedPokemons]);
 
     const [ref, inView] = useInView();
@@ -62,7 +63,7 @@ function PokemonsList({pokemons}) {
                 }
             </PokemonListContainer>
             {
-                pokemons.length && (
+                offset < pokemons.length && (
                     <div ref={ref}>
                         <SpinnerContainer />
                     </div>
